@@ -1,0 +1,704 @@
+:root {
+    --ink: #43233a;
+    --paper: #fffdf6;
+    --muted: #755265;
+    --rose: #ec6d95;
+    --gold: #e7a536;
+    --green: #60a980;
+    --aqua: #5bbfc4;
+    --lilac: #a989e8;
+    --sun: #ffe08a;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--ink);
+    background:
+        radial-gradient(circle at 9% 12%, rgba(255, 141, 174, 0.5), transparent 18rem),
+        radial-gradient(circle at 88% 10%, rgba(91, 191, 196, 0.48), transparent 20rem),
+        radial-gradient(circle at 16% 82%, rgba(255, 224, 138, 0.62), transparent 22rem),
+        radial-gradient(circle at 86% 78%, rgba(169, 137, 232, 0.38), transparent 19rem),
+        linear-gradient(180deg, #fff4f8 0%, #fff8d9 34%, #dff8ef 66%, #f4ecff 100%);
+    font-family: Georgia, "Times New Roman", serif;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(236, 109, 149, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91, 191, 196, 0.10) 1px, transparent 1px);
+    background-size: 54px 54px;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), transparent 74%);
+}
+
+.site-content {
+    transition: opacity 320ms ease, filter 320ms ease;
+}
+
+body.locked {
+    overflow: hidden;
+}
+
+body.locked .site-content {
+    height: 100dvh;
+    overflow: hidden;
+    opacity: 0;
+    filter: blur(12px);
+    pointer-events: none;
+}
+
+.passcode-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: grid;
+    place-items: center;
+    min-height: 100dvh;
+    padding: max(22px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(22px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+    background:
+        radial-gradient(circle at 18% 18%, rgba(255, 141, 174, 0.55), transparent 18rem),
+        radial-gradient(circle at 84% 20%, rgba(91, 191, 196, 0.5), transparent 20rem),
+        linear-gradient(135deg, rgba(255, 244, 248, 0.94), rgba(255, 248, 217, 0.96));
+}
+
+body.unlocked .passcode-screen {
+    display: none;
+}
+
+.passcode-card {
+    width: min(420px, 92vw);
+    padding: 34px 30px 30px;
+    text-align: center;
+    background: var(--paper);
+    border: 2px solid rgba(236, 109, 149, 0.22);
+    box-shadow: 0 26px 70px rgba(99, 60, 93, 0.22);
+    transform: rotate(-1.5deg);
+}
+
+.passcode-card h2 {
+    margin: 0 0 20px;
+    font-family: "Segoe Print", "Bradley Hand ITC", "Comic Sans MS", cursive;
+    font-size: clamp(2rem, 8vw, 3.6rem);
+    font-weight: 400;
+    line-height: 1;
+}
+
+.passcode-card label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.passcode-card input {
+    width: 100%;
+    height: 58px;
+    border: 2px solid rgba(117, 82, 101, 0.22);
+    border-radius: 0;
+    padding: 0 16px;
+    color: var(--ink);
+    background: #fff8d9;
+    font-size: 1.6rem;
+    text-align: center;
+    letter-spacing: 0.45rem;
+}
+
+.passcode-card input:focus {
+    outline: 3px solid rgba(236, 109, 149, 0.34);
+    border-color: var(--rose);
+}
+
+.passcode-card button {
+    width: 100%;
+    margin-top: 14px;
+    border: 0;
+    padding: 15px 18px;
+    color: #fffdf6;
+    background: var(--rose);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 12px 26px rgba(236, 109, 149, 0.28);
+}
+
+.passcode-card button:hover,
+.passcode-card button:focus-visible {
+    background: #d8527e;
+}
+
+.passcode-error {
+    min-height: 26px;
+    margin: 12px 0 0;
+    color: #b8325f;
+    font-family: "Segoe Print", "Bradley Hand ITC", "Comic Sans MS", cursive;
+}
+
+.passcode-card.shake {
+    animation: shake 260ms ease;
+}
+
+@keyframes shake {
+    0%,
+    100% {
+        translate: 0 0;
+    }
+
+    25% {
+        translate: -8px 0;
+    }
+
+    50% {
+        translate: 8px 0;
+    }
+
+    75% {
+        translate: -5px 0;
+    }
+}
+
+.hero {
+    min-height: 55vh;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    padding: 72px 20px 34px;
+    text-align: center;
+}
+
+.eyebrow,
+.caption,
+.signature,
+.from-line,
+.memory-note {
+    font-family: "Segoe Print", "Bradley Hand ITC", "Comic Sans MS", cursive;
+}
+
+.eyebrow {
+    margin: 0 0 12px;
+    color: #b55b00;
+    font-size: clamp(0.9rem, 2vw, 1.15rem);
+}
+
+h1 {
+    margin: 0;
+    max-width: 920px;
+    font-family: "Segoe Print", "Bradley Hand ITC", "Comic Sans MS", cursive;
+    font-size: clamp(3.2rem, 10vw, 8.8rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: 0;
+    text-shadow: 0 8px 0 rgba(255, 255, 255, 0.78), 0 22px 42px rgba(236, 109, 149, 0.22);
+}
+
+.hero-copy {
+    width: min(620px, 92vw);
+    margin: 26px 0 0;
+    color: var(--muted);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.7;
+}
+
+#collage {
+    width: min(1560px, 98vw);
+    margin: 0 auto;
+    padding: 12px 0 70px;
+}
+
+.memory-cluster {
+    min-height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(38px, 5vw, 92px);
+    padding: 32px 0 100px;
+}
+
+.photo-card {
+    --tilt: 0deg;
+    --hover-tilt: 0deg;
+    width: clamp(320px, 28vw, 500px);
+    height: clamp(390px, 36vw, 640px);
+    appearance: none;
+    border: 0;
+    margin: 0;
+    padding: 17px 17px 28px;
+    display: flex;
+    flex-direction: column;
+    color: #222;
+    background: var(--paper);
+    box-shadow: 0 22px 44px rgba(99, 60, 93, 0.22);
+    cursor: pointer;
+    transform: rotate(var(--tilt));
+    transition: transform 260ms ease, box-shadow 260ms ease, filter 260ms ease;
+}
+
+.photo-card:hover,
+.photo-card:focus-visible {
+    z-index: 5;
+    filter: saturate(1.08);
+    box-shadow: 0 30px 70px rgba(99, 60, 93, 0.32);
+    transform: translateY(-12px) scale(1.06) rotate(var(--hover-tilt));
+}
+
+.photo-card:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 7px;
+}
+
+.photo-window {
+    display: block;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    overflow: hidden;
+    background: #f2dfe8;
+}
+
+.photo-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: rotate(var(--photo-rotation, 0deg)) scale(1.02);
+    transition: transform 320ms ease;
+}
+
+.photo-card:hover img,
+.photo-card:focus-visible img {
+    transform: rotate(var(--photo-rotation, 0deg)) scale(1.11);
+}
+
+.photo-card img.needs-rotation {
+    width: 132%;
+    height: 132%;
+    margin: -16%;
+}
+
+.caption {
+    display: block;
+    min-height: 24px;
+    padding-top: 13px;
+    color: #2a2421;
+    font-size: clamp(1.15rem, 1.4vw, 1.55rem);
+    line-height: 1.1;
+    text-align: center;
+}
+
+.polaroid {
+    width: clamp(340px, 29vw, 520px);
+    height: clamp(410px, 37vw, 660px);
+}
+
+.polaroid.wide {
+    width: clamp(430px, 36vw, 660px);
+    height: clamp(330px, 29vw, 520px);
+}
+
+.polaroid.tall {
+    width: clamp(330px, 27vw, 500px);
+    height: clamp(500px, 45vw, 760px);
+}
+
+.polaroid.mini {
+    width: clamp(290px, 24vw, 430px);
+    height: clamp(360px, 32vw, 560px);
+}
+
+.shape {
+    width: clamp(330px, 28vw, 520px);
+    height: clamp(390px, 35vw, 620px);
+    padding: 16px;
+    border-radius: 28px;
+    background: #fff1ee;
+    background: color-mix(in srgb, var(--paper) 92%, var(--rose));
+}
+
+.shape .caption {
+    color: #332928;
+}
+
+.shape.blob .photo-window {
+    border-radius: 42% 58% 46% 54% / 55% 35% 65% 45%;
+}
+
+.shape.arch .photo-window {
+    border-radius: 50% 50% 12px 12px;
+}
+
+.memory-cluster .photo-card:nth-child(3n + 1) {
+    margin-top: clamp(0px, 3vw, 46px);
+}
+
+.memory-cluster .photo-card:nth-child(3n + 2) {
+    margin-bottom: clamp(0px, 4vw, 58px);
+}
+
+.memory-cluster .photo-card:nth-child(5n) {
+    margin-left: clamp(0px, 2vw, 34px);
+    margin-right: clamp(0px, 2vw, 34px);
+}
+
+.memory-note {
+    width: min(620px, 88vw);
+    margin: -22px auto 70px;
+    color: #191614;
+    background: #f4df93;
+    box-shadow: 0 18px 40px rgba(99, 60, 93, 0.2);
+    padding: 22px 28px;
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+    line-height: 1.45;
+    text-align: center;
+    transform: rotate(-1.5deg);
+}
+
+.memory-note:nth-of-type(2n) {
+    background: #c9f0ef;
+    transform: rotate(1.5deg);
+}
+
+.reveal {
+    opacity: 0;
+    translate: 0 42px;
+    transition: opacity 700ms ease var(--delay, 0ms), translate 700ms ease var(--delay, 0ms);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    translate: 0 0;
+}
+
+.love-letter {
+    width: min(1060px, 92vw);
+    margin: 20px auto 90px;
+    display: grid;
+    grid-template-columns: minmax(220px, 0.85fr) minmax(260px, 1fr);
+    gap: clamp(28px, 6vw, 80px);
+    align-items: center;
+}
+
+.letter-photo {
+    padding: 16px 16px 46px;
+    background: var(--paper);
+    transform: rotate(-4deg);
+    box-shadow: 0 26px 70px rgba(99, 60, 93, 0.24);
+}
+
+.letter-photo img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+.letter-copy h2 {
+    margin: 0;
+    font-family: "Segoe Print", "Bradley Hand ITC", "Comic Sans MS", cursive;
+    font-size: clamp(2.3rem, 5.5vw, 5.4rem);
+    font-weight: 400;
+    line-height: 1;
+}
+
+.letter-copy p {
+    color: var(--muted);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.75;
+}
+
+.letter-copy .signature {
+    margin-top: 24px;
+    color: var(--rose);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+.letter-copy .from-line {
+    margin-top: 4px;
+    color: var(--ink);
+    font-size: clamp(1.1rem, 2.2vw, 1.55rem);
+}
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: none;
+    place-items: center;
+    padding: 28px;
+    background: rgba(67, 35, 58, 0.82);
+}
+
+.lightbox.open {
+    display: grid;
+}
+
+.lightbox img {
+    max-width: min(980px, 92vw);
+    max-height: 78vh;
+    object-fit: contain;
+    box-shadow: 0 26px 80px rgba(67, 35, 58, 0.52);
+}
+
+.lightbox p {
+    margin: 16px 0 0;
+    font-family: "Segoe Print", "Bradley Hand ITC", "Comic Sans MS", cursive;
+    color: var(--paper);
+    font-size: 1.25rem;
+}
+
+.lightbox-close {
+    position: fixed;
+    top: 18px;
+    right: 22px;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.26);
+    border-radius: 50%;
+    color: var(--paper);
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+@media (max-width: 860px) {
+    body::before {
+        background-size: 38px 38px;
+    }
+
+    .passcode-card {
+        width: min(390px, 92vw);
+        padding: 30px 24px 26px;
+    }
+
+    .passcode-card input {
+        height: 56px;
+        font-size: 1.35rem;
+        letter-spacing: 0.35rem;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 54px 18px 26px;
+    }
+
+    h1 {
+        font-size: clamp(3rem, 15vw, 5.8rem);
+        text-shadow: 0 5px 0 rgba(255, 255, 255, 0.78), 0 16px 30px rgba(236, 109, 149, 0.2);
+    }
+
+    .hero-copy {
+        width: min(540px, 90vw);
+        margin-top: 18px;
+        font-size: 1rem;
+        line-height: 1.55;
+    }
+
+    #collage {
+        width: min(720px, 94vw);
+        padding-top: 6px;
+    }
+
+    .memory-cluster {
+        gap: 32px;
+        padding: 18px 0 58px;
+    }
+
+    .memory-cluster .photo-card:nth-child(n) {
+        margin: 0;
+    }
+
+    .photo-card {
+        transform: rotate(calc(var(--tilt) * 0.45));
+        box-shadow: 0 16px 34px rgba(99, 60, 93, 0.2);
+    }
+
+    .polaroid,
+    .shape,
+    .polaroid.mini {
+        width: min(500px, 86vw);
+        height: min(620px, 108vw);
+    }
+
+    .polaroid.wide {
+        width: min(540px, 88vw);
+        height: min(440px, 74vw);
+    }
+
+    .polaroid.tall {
+        width: min(460px, 84vw);
+        height: min(680px, 122vw);
+    }
+
+    .caption {
+        font-size: clamp(1rem, 4vw, 1.35rem);
+    }
+
+    .memory-note {
+        width: min(500px, 86vw);
+        margin: -8px auto 52px;
+    }
+
+    .love-letter {
+        grid-template-columns: 1fr;
+        width: min(560px, 88vw);
+        margin-top: 4px;
+    }
+
+    .letter-photo {
+        width: min(420px, 82vw);
+        justify-self: center;
+        padding: 12px 12px 36px;
+    }
+
+    .letter-copy {
+        text-align: center;
+    }
+}
+
+@media (max-width: 560px) {
+    .hero {
+        padding: 42px 16px 20px;
+    }
+
+    .eyebrow {
+        font-size: 0.88rem;
+    }
+
+    h1 {
+        font-size: clamp(2.6rem, 17vw, 4.4rem);
+    }
+
+    #collage {
+        width: min(430px, 94vw);
+    }
+
+    .memory-cluster {
+        gap: 28px;
+        padding: 14px 0 46px;
+    }
+
+    .polaroid,
+    .polaroid.mini,
+    .shape {
+        width: min(370px, 90vw);
+        height: min(500px, 118vw);
+        padding: 11px 11px 18px;
+    }
+
+    .polaroid.wide {
+        width: min(380px, 90vw);
+        height: min(360px, 86vw);
+        padding: 11px 11px 18px;
+    }
+
+    .polaroid.tall {
+        width: min(350px, 86vw);
+        height: min(560px, 136vw);
+        padding: 11px 11px 18px;
+    }
+
+    .photo-card:hover,
+    .photo-card:focus-visible {
+        transform: translateY(-6px) scale(1.02) rotate(var(--tilt));
+    }
+
+    .caption {
+        min-height: 18px;
+        padding-top: 8px;
+        font-size: clamp(0.92rem, 4vw, 1.12rem);
+    }
+
+    .memory-note {
+        width: min(360px, 86vw);
+        margin-bottom: 44px;
+        padding: 16px 18px;
+        font-size: 1rem;
+    }
+
+    .love-letter {
+        width: min(380px, 90vw);
+        margin-bottom: 54px;
+    }
+
+    .letter-copy h2 {
+        font-size: clamp(2.2rem, 14vw, 3.9rem);
+    }
+
+    .letter-copy p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .lightbox {
+        padding: 54px 14px 24px;
+    }
+
+    .lightbox img {
+        max-width: 94vw;
+        max-height: 72dvh;
+    }
+
+    .lightbox-close {
+        top: max(12px, env(safe-area-inset-top));
+        right: 12px;
+        width: 42px;
+        height: 42px;
+    }
+}
+
+@media (max-width: 380px) {
+    .passcode-card {
+        padding: 26px 18px 22px;
+    }
+
+    .passcode-card h2 {
+        font-size: 2.3rem;
+    }
+
+    .polaroid,
+    .polaroid.mini,
+    .shape {
+        width: 88vw;
+        height: 118vw;
+    }
+
+    .polaroid.wide {
+        width: 88vw;
+        height: 82vw;
+    }
+
+    .polaroid.tall {
+        width: 86vw;
+        height: 132vw;
+    }
+}
+
+@media (hover: none) {
+    .photo-card:hover {
+        filter: none;
+        box-shadow: 0 16px 34px rgba(99, 60, 93, 0.2);
+        transform: rotate(calc(var(--tilt) * 0.45));
+    }
+
+    .photo-card:hover img {
+        transform: rotate(var(--photo-rotation, 0deg)) scale(1.02);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}

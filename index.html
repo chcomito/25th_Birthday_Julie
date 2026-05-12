@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Juliette</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="locked">
+    <section class="passcode-screen" id="passcode-screen" aria-label="Birthday page passcode">
+        <form class="passcode-card" id="passcode-form">
+            <p class="eyebrow">private birthday page</p>
+            <h2>Enter the code</h2>
+            <label for="passcode-input">Passcode</label>
+            <input id="passcode-input" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="----">
+            <button type="submit">Unlock</button>
+            <p class="passcode-error" id="passcode-error" aria-live="polite"></p>
+        </form>
+    </section>
+
+    <div class="site-content" id="site-content" aria-hidden="true">
+    <header class="hero">
+        <p class="eyebrow">A little wall of us</p>
+        <h1>Happy Birthday<br>Juliette</h1>
+        <p class="hero-copy">25 years of being amazing, and a whole page full of everyone who loves you.</p>
+    </header>
+
+    <main id="collage" aria-label="Birthday memory collage"></main>
+
+    <section class="love-letter reveal">
+        <div class="letter-photo">
+            <img src="public/images/1000048222.jpg" alt="A favorite birthday memory">
+        </div>
+        <div class="letter-copy">
+            <p class="eyebrow">One more thing</p>
+            <h2>You are so loved.</h2>
+            <p>
+                I hope this felt like all of your friends and family telling you happy birthday at once. We all love you and
+                hope you have the best day.
+            </p>
+            <p class="signature">I love you forever.</p>
+            <p class="from-line">from Christopher</p>
+        </div>
+    </section>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+        <button class="lightbox-close" type="button" aria-label="Close photo">x</button>
+        <img src="" alt="">
+        <p></p>
+    </div>
+    </div>
+
+    <script>
+        const PASSCODE = "0512";
+        const passcodeScreen = document.getElementById("passcode-screen");
+        const passcodeForm = document.getElementById("passcode-form");
+        const passcodeInput = document.getElementById("passcode-input");
+        const passcodeError = document.getElementById("passcode-error");
+        const siteContent = document.getElementById("site-content");
+
+        function unlockSite() {
+            document.body.classList.remove("locked");
+            document.body.classList.add("unlocked");
+            passcodeScreen.setAttribute("aria-hidden", "true");
+            siteContent.setAttribute("aria-hidden", "false");
+            localStorage.setItem("julietteBirthdayUnlocked", "true");
+        }
+
+        if (localStorage.getItem("julietteBirthdayUnlocked") === "true") {
+            unlockSite();
+        } else {
+            passcodeInput.focus();
+        }
+
+        passcodeForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            if (passcodeInput.value === PASSCODE) {
+                unlockSite();
+                return;
+            }
+
+            passcodeError.textContent = "Try again.";
+            passcodeInput.value = "";
+            passcodeInput.focus();
+            passcodeForm.classList.remove("shake");
+            window.setTimeout(() => passcodeForm.classList.add("shake"), 0);
+        });
+
+        const images = [
+            "1000048222.jpg",
+            "1000048224.jpg",
+            "1000048225.jpg",
+            "1000048227.jpg",
+            "1000048228.jpg",
+            "IMG_0632.jpg",
+            "IMG_0650.jpg",
+            "IMG_1433.JPG",
+            "IMG_1542.JPG",
+            "IMG_20240614_125636.jpg",
+            "IMG_2224.jpeg",
+            "IMG_2225.jpeg",
+            "IMG_2228.jpeg",
+            "IMG_2229.png",
+            "IMG_2234.jpeg",
+            "IMG_2235.jpeg",
+            "IMG_2236.jpeg",
+            "IMG_4237.jpg",
+            "IMG_5703.jpg",
+            "IMG_5759.jpg",
+            "IMG_5794.JPG",
+            "IMG_5813.JPG",
+            "IMG_5832_Original.jpeg",
+            "IMG_6224.JPG",
+            "IMG_6510.jpg",
+            "IMG_6747.jpg",
+            "IMG_6787.jpg",
+            "IMG_6794.jpg",
+            "IMG_6862.jpg",
+            "IMG_6906.jpeg",
+            "IMG_6907.jpeg",
+            "IMG_7086.PNG",
+            "IMG_7177.jpg",
+            "IMG_7216.jpg",
+            "IMG_7683.jpg",
+            "IMG_7717.jpg",
+            "IMG_7731.jpg",
+            "IMG_7757.PNG",
+            "IMG_7758.PNG",
+            "IMG_7760.PNG",
+            "IMG_7819.jpeg",
+            "IMG_8085.jpg",
+            "IMG_8253.jpg",
+            "IMG_8760_Original.jpeg",
+            "IMG_8853.jpg",
+            "IMG_8859.png",
+            "IMG_9004.jpg",
+            "IMG_9647_Original.jpg",
+            "IMG_9649_Original.jpeg",
+            "lp_image.jpg",
+            "Resized_20201231_173817.jpeg",
+            "Resized_IMG_2867.jpeg"
+        ];
+
+        const rotations = {
+            "IMG_0632.jpg": "-90deg",
+            "IMG_0650.jpg": "-90deg",
+            "IMG_2229.png": "-90deg",
+            "IMG_2234.jpeg": "-90deg",
+            "IMG_4237.jpg": "180deg",
+            "IMG_5703.jpg": "-90deg",
+            "IMG_5759.jpg": "-90deg",
+            "IMG_6510.jpg": "-90deg",
+            "IMG_6747.jpg": "-90deg",
+            "IMG_6787.jpg": "-90deg",
+            "IMG_6862.jpg": "180deg",
+            "IMG_7177.jpg": "-90deg",
+            "IMG_7216.jpg": "-90deg",
+            "IMG_7683.jpg": "-90deg",
+            "IMG_7717.jpg": "-90deg",
+            "IMG_8085.jpg": "-90deg",
+            "IMG_8253.jpg": "-90deg",
+            "IMG_9004.jpg": "-90deg",
+            "lp_image.jpg": "-90deg"
+        };
+
+        const captions = [
+            "the old days",
+            "main character",
+            "favorite smile",
+            "family time",
+            "pure chaos",
+            "so beautiful",
+            "good times",
+            "always unforgettable",
+            "remember this?",
+            "wedding vibes",
+            "oh wow",
+            "friends",
+            "?",
+            "little adventure",
+            "too much zoom",
+            "besties",
+            "city girl",
+            "this day",
+            "christmas",
+            "24?",
+            "yehaw",
+            "road trip",
+            "golden hour",
+            "cat",
+            "still smiling",
+            "outdoors?",
+            "views",
+            "so fun",
+            "oh no",
+            "professional",
+            "besties",
+            "dragon",
+            "so sad",
+            "golf",
+            "so happy",
+            "summer",
+            "best day",
+            "annie",
+            "olivia",
+            "ang n maria",
+            "women",
+            "dinner",
+            "golf again",
+            "beach day?",
+            "baseball",
+            "philly",
+            "derby day",
+            "besties",
+            "so cute",
+            "cat?",
+            "old days",
+            "good times",
+        
+        ];
+
+        const notes = [
+            "Family and Friends what could be better?",
+            "So many pictures over 25 years.",
+            "Wow so many emotions in your memories.",
+            "Wow so many friends and family."
+        ];
+
+        const cardTypes = ["polaroid", "polaroid wide", "polaroid tall", "shape blob", "polaroid mini", "shape arch"];
+        const tilts = [-10, 6, -4, 9, -7, 3, 11, -12, 5, -2];
+        const collage = document.getElementById("collage");
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImage = lightbox.querySelector("img");
+        const lightboxCaption = lightbox.querySelector("p");
+        const closeButton = lightbox.querySelector("button");
+
+        function createNote(text) {
+            const note = document.createElement("aside");
+            note.className = "memory-note reveal";
+            note.textContent = text;
+            return note;
+        }
+
+        function createCard(filename, index) {
+            const button = document.createElement("button");
+            const cardType = cardTypes[index % cardTypes.length];
+            const tilt = tilts[index % tilts.length];
+            const caption = captions[index % captions.length];
+
+            button.type = "button";
+            button.className = `photo-card ${cardType} reveal`;
+            button.style.setProperty("--tilt", `${tilt}deg`);
+            button.style.setProperty("--hover-tilt", `${tilt * 0.45}deg`);
+            button.style.setProperty("--delay", `${(index % 8) * 70}ms`);
+            button.setAttribute("aria-label", `Open memory: ${caption}`);
+
+            const imageWrap = document.createElement("span");
+            imageWrap.className = "photo-window";
+
+            const img = document.createElement("img");
+            img.src = `public/images/${filename}`;
+            img.alt = `Birthday memory ${index + 1}`;
+            img.loading = "lazy";
+            img.decoding = "async";
+
+            if (rotations[filename]) {
+                img.style.setProperty("--photo-rotation", rotations[filename]);
+                img.classList.add("needs-rotation");
+            }
+
+            const label = document.createElement("span");
+            label.className = "caption";
+            label.textContent = caption;
+
+            imageWrap.appendChild(img);
+            button.appendChild(imageWrap);
+            button.appendChild(label);
+
+            button.addEventListener("click", () => {
+                lightboxImage.src = img.src;
+                lightboxImage.alt = img.alt;
+                lightboxCaption.textContent = caption;
+                lightbox.classList.add("open");
+                lightbox.setAttribute("aria-hidden", "false");
+            });
+
+            return button;
+        }
+
+        function buildCollage() {
+            const chunkSize = 10;
+            for (let i = 0; i < images.length; i += chunkSize) {
+                const section = document.createElement("section");
+                section.className = "memory-cluster";
+
+                images.slice(i, i + chunkSize).forEach((filename, offset) => {
+                    section.appendChild(createCard(filename, i + offset));
+                });
+
+                collage.appendChild(section);
+
+                const noteIndex = Math.floor(i / chunkSize);
+                if (notes[noteIndex]) {
+                    collage.appendChild(createNote(notes[noteIndex]));
+                }
+            }
+        }
+
+        function revealOnScroll() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.14 });
+
+            document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove("open");
+            lightbox.setAttribute("aria-hidden", "true");
+            lightboxImage.src = "";
+        }
+
+        buildCollage();
+        revealOnScroll();
+
+        closeButton.addEventListener("click", closeLightbox);
+        lightbox.addEventListener("click", (event) => {
+            if (event.target === lightbox) closeLightbox();
+        });
+        window.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") closeLightbox();
+        });
+    </script>
+</body>
+</html>
